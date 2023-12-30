@@ -140,8 +140,47 @@ public class Sorting {
     }
 
 
-    // TBD
-    public static void countSort(int[] arr) {
+    // In this algo - we put initial element at right place counting # of elements smaller than that.
+    // then we put that in that position by swapping
+    // then in both side the, bigger and smaller elements in left and right side respectively, swapped.
+    // then recursive action done for left and right side.
+    public static void countSort(int[] arr, int s, int e) {
+        if (s>=e) {
+            return;
+        }
 
+
+        int idx = s;
+
+        for (int i=s; i<e-s+1; i++) {
+            if (arr[idx] > arr[i]) {
+                idx++;
+            }
+        }
+
+        Utils.swap(arr, s, idx);
+
+        int i = s;
+        int j = e;
+
+        while (i<idx || j>idx) {
+            if (arr[i] < arr[idx]) {
+                i++;
+                continue;
+            }
+
+            if (arr[j] > arr[idx]) {
+                j--;
+                continue;
+            }
+
+            Utils.swap(arr, i, j);
+            i++;
+            j--;
+        }
+
+        countSort(arr, s, idx-1);
+        countSort(arr, idx+1, e);
     }
+
 }
